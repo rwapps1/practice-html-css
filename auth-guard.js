@@ -116,6 +116,10 @@ function showOverlay() {
     document.body.appendChild(overlay);
   }
   document.documentElement.style.visibility = "visible";
+  // Stop the real page from scrolling while locked, so there's nothing
+  // underneath for a scroll-related rendering glitch to expose.
+  document.documentElement.style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
 
   const emailInput = document.getElementById("auth-guard-email");
   const passInput  = document.getElementById("auth-guard-pass");
@@ -154,6 +158,8 @@ function showOverlay() {
 function hideOverlay() {
   if (document.body.contains(overlay)) overlay.remove();
   document.documentElement.style.visibility = "visible";
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
 
   if (!document.body.contains(signOutButton)) {
     document.body.appendChild(signOutButton);
